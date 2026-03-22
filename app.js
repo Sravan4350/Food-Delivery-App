@@ -7,6 +7,9 @@ import Contact from "./src/components/Contact/Contact"
 import NotFound from "./src/components/NavBar/NotFound"
 import Product from "./src/components/ProductCard/Product"
 import { ProductCards  } from "./src/components"
+import { lazy, Suspense } from "react"
+
+const Grocery = lazy(() => import('./src/components/Grocery'))
 
 const AppLayout = () => {
   return (
@@ -22,7 +25,7 @@ const appRouter = createBrowserRouter([
     element: <AppLayout />,
     children : [
       {
-        path: "/",
+        index:true,
         element:<BodyComponent />
       },
       {
@@ -44,10 +47,15 @@ const appRouter = createBrowserRouter([
         path: "/product/:id",
         element:  <Product />,
         errorElement: <NotFound />
+      },
+      {
+        path: "/grocery",
+        element:  (<Suspense fallback={<h1>Loading......</h1>}><Grocery /></Suspense>),
+        // We can ignore Suspense because RouterProvider's have Built-in Suspense, it is used for older versions
+        errorElement: <NotFound />
       }
     ],
     errorElement: <NotFound />,
-
   }
 ])
 

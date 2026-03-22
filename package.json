@@ -22,9 +22,11 @@
     "parcel": "^2.16.3"
   },
   "dependencies": {
+    "@tailwindcss/postcss": "^4.2.2",
     "axios": "^1.13.4",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
-    "react-router-dom": "^7.13.0"
+    "react-router-dom": "^7.13.0",
+    "tailwindcss": "^4.2.2"
   }
 }

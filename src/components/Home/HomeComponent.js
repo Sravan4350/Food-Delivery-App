@@ -1,16 +1,16 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import {ProductCards , Shimmer} from '../index'
-import axios from "axios"
-import { ALL_PRODUCTS_URL } from "../../utils/constants"
-import './Home.css'
+import useFetchAllProducts from "../utils/useFetchAllProducts"
+import useOnlineStatus from "../utils/useOnlineStatus"
+ 
 const BodyComponent = () => {
 
-  const [loading, setLoading] = useState(true)
-  const [allProduct, setAllProductData] = useState([])
   const [search, setSearch] = useState("")
-  const [filteredData, setFilteredData] = useState([]) // copy data for filtering...to avoid Data loss
-  
 
+  const userStatus = useOnlineStatus()
+
+  // Custom Hook to fetch Products Data
+  const {allProduct, filteredData, setFilteredData, loading} = useFetchAllProducts()
 
   // Filtering Restaurants Based on Search
   const onSearchItems = (event) => {
@@ -22,33 +22,15 @@ const BodyComponent = () => {
 
   // Top Rated Filter Restaurants
   const onClickFilter = () => {
-    const topRated = allProduct?.filter(each => Number(each.rating.rate) > 4)
-    console.log(topRated);
-    
+    const topRated = allProduct?.filter(each => Number(each.rating.rate) > 4)    
     setFilteredData(topRated)
   }
 
-  const getProductData = async () => {
-    try {
-      setLoading(true)
-      const response = await axios.get(ALL_PRODUCTS_URL)
-      const restaurantCard = response.data ?? [];      
-      setFilteredData(restaurantCard)
-      setAllProductData(restaurantCard)
-      setLoading(false)
-    }
-    catch (error) {
-      console.error("Error in API call", error);
-      setLoading(false)
-    }
+  if (!userStatus) {
+    return <div style={{display:"flex", justifyContent:"center", alignItems:"center", height:"80vh", fontFamily:"sans-serif", fontWeight:"bold"}}>
+      <h1>No internet connection. Please check your network and try again</h1>
+    </div>
   }
-
-
-  // Fetch Call
-  useEffect(() => {
-    getProductData()
-  }, [])
-
   return (
     <div className="search-wrapper">
       <div style={{display:"flex", gap:"20px"}}>

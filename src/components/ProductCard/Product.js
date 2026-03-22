@@ -1,28 +1,12 @@
-import axios from "axios"
-import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
-import './Product.css'
 import ProductShimmer from "./ProductShimmer"
-import { PRODUCT_URL } from "../../utils/constants"
+import useFetchProduct from "../utils/useFetchProduct"
 
 const Product = () => {
   const { id } = useParams()
-  const [product, setProduct] = useState(null)
 
-  const fetchProduct = async () => {
-    try {
-      console.log(PRODUCT_URL+id);
-      
-      const response = await axios.get(PRODUCT_URL+id)
-      setProduct(response.data)
-    } catch (err) {
-      console.error(err)
-    }
-  }
-
-  useEffect(() => {
-    fetchProduct()
-  }, [id])
+  // Custom Hook to fetch Specific Product
+  const product = useFetchProduct(id)
 
   if (!product) return <ProductShimmer />
 

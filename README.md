@@ -29,7 +29,7 @@ src/
 │   │   ├── Product.js
 │   │   ├── Product.css
 │   │   └── ProductShimmer.js
-│   └── styling/
+│   |
 ├── utils/
 │   └── constants.js
 ```
