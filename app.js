@@ -5,8 +5,8 @@ import BodyComponent from "./src/components/Home/HomeComponent"
 import About from "./src/components/About/About"
 import Contact from "./src/components/Contact/Contact"
 import NotFound from "./src/components/NavBar/NotFound"
-import Product from "./src/components/ProductCard/Product"
-import { ProductCards  } from "./src/components"
+import RestroCard from "./src/components/RestroCard/RestroCard"
+import { GetAllRestro  } from "./src/components/index"
 import { lazy, Suspense } from "react"
 
 const Grocery = lazy(() => import('./src/components/Grocery'))
@@ -39,13 +39,13 @@ const appRouter = createBrowserRouter([
         errorElement: <NotFound />
       },
       {
-        path: "/product",
-        element: <ProductCards  />,
+        path: "/restaurant",
+        element: <GetAllRestro  />,
         errorElement: <NotFound />
       },
       {
-        path: "/product/:id",
-        element:  <Product />,
+        path: "/restro/:id",
+        element:  <RestroCard />,
         errorElement: <NotFound />
       },
       {

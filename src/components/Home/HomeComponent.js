@@ -1,24 +1,24 @@
 import { useState } from "react"
-import { ProductCards, Shimmer } from '../index'
-import useFetchAllProducts from "../utils/useFetchAllProducts"
+import { GetAllRestro, Shimmer } from '../index'
+import useFetchAllRestro from "../utils/useFetchAllRestro"
 import useOnlineStatus from "../utils/useOnlineStatus"
 
 const BodyComponent = () => {
   const [search, setSearch] = useState("")
   const userStatus = useOnlineStatus()
-  const { allProduct, filteredData, setFilteredData, loading } = useFetchAllProducts()
-
+  const { allRestaurants, filteredData, setFilteredData, loading } = useFetchAllRestro()
+  
   const onSearchItems = (event) => {
     const value = event.target.value
     setSearch(value)
-    const newFilteredData = allProduct?.filter(each =>
-      each.title.toLowerCase().includes(value.toLowerCase())
+    const newFilteredData = allRestaurants?.filter(each =>
+      each.name.toLowerCase().includes(value.toLowerCase())
     )
     setFilteredData(newFilteredData)
   }
 
   const onClickFilter = () => {
-    const topRated = allProduct?.filter(each => Number(each.rating.rate) > 4)
+    const topRated = allRestaurants?.filter(each => Number(each.rating) > 4)
     setFilteredData(topRated)
   }
 
@@ -40,8 +40,8 @@ const BodyComponent = () => {
 
         {/* Search Input */}
         <input
-          className="w-72 h-10 border border-gray-300 rounded-lg px-4 text-sm outline-none focus:ring-2 focus:ring-blue-400 transition duration-200 bg-white"
-          placeholder="Search products..."
+          className="w-72 h-10 border border-gray-300 rounded-lg px-4 text-sm outline-none focus:ring-2 focus:ring-orange-400 transition duration-200 bg-white"
+          placeholder="Search restaurants..."
           value={search}
           type="text"
           onChange={onSearchItems}
@@ -49,17 +49,17 @@ const BodyComponent = () => {
 
         {/* Filter Button */}
         <button
-          className="bg-blue-500 text-white text-sm font-semibold px-5 py-2 rounded-lg hover:bg-blue-600 hover:scale-105 transition duration-200 cursor-pointer shadow-sm"
+          className="bg-orange-500 text-white text-sm font-semibold px-5 py-2 rounded-lg hover:bg-orange-600 hover:scale-105 transition duration-200 cursor-pointer shadow-sm"
           onClick={onClickFilter}
         >
-          Top Rated Products
+          Top Rated Restaurants
         </button>
 
       </div>
 
-      {/* Product Cards / Shimmer */}
+      {/* Restaurant Cards / Shimmer */}
       <div className="flex flex-wrap justify-center gap-6 px-6 pb-10">
-        {loading ? <Shimmer /> : <ProductCards productData={filteredData} />}
+        {loading ? <Shimmer /> : <GetAllRestro restaurantData={filteredData} />}
       </div>
 
     </div>

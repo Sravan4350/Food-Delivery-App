@@ -1,4 +1,4 @@
-const ProductShimmer = () => {
+const RestroShimmer = () => {
   return (
     <div className="product-page shimmer-wrapper">
 
@@ -39,4 +39,4 @@ const ProductShimmer = () => {
   );
 };
 
-export default ProductShimmer;
+export default RestroShimmer;
